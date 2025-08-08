@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://8ymgnnhi0dn1"]
+
+[ext_resource type="PackedScene" uid="uid://cix3nxqhag6yl" path="res://models/kenny/GLB format/floor-square.glb" id="1_se17s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_se17s"]
+size = Vector3(3, 1.5, 3)
+
+[node name="floor" type="StaticBody3D"]
+
+[node name="floor-square2" parent="." instance=ExtResource("1_se17s")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0.75, 0, 0.75)
+
+[node name="floor-square5" parent="." instance=ExtResource("1_se17s")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0.75, 0, -0.75)
+
+[node name="floor-square6" parent="." instance=ExtResource("1_se17s")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.75, 0, -0.75)
+
+[node name="floor-square7" parent="." instance=ExtResource("1_se17s")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.75, 0, 0.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.750488, 0)
+shape = SubResource("BoxShape3D_se17s")
+
+[editable path="floor-square2"]
+[editable path="floor-square5"]
+[editable path="floor-square6"]
+[editable path="floor-square7"]

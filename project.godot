@@ -14,7 +14,6 @@ config/name="Starter Kit FPS"
 config/tags=PackedStringArray("starterkit")
 run/main_scene="uid://b3hn8ms2eeq6v"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.png"
 
 [autoload]
 

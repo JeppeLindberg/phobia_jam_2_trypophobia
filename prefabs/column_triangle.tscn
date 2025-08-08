@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://m4rxfoyiguk5"]
+
+[ext_resource type="PackedScene" uid="uid://dfbuq3yx8psbb" path="res://models/kenny/GLB format/column-triangle.glb" id="1_1wlxw"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1wlxw"]
+data = PackedVector3Array(-0.1, 0, -0.1, 0.1, 0, 0.1, 0.1, 0, -0.1, -0.1, 1, -0.1, 0.1, 1, -0.1, 0.1, 1, 0.1, 0.1, 1, 0.1, 0.1, 1, -0.1, 0.1, 0, -0.1, 0.1, 0, -0.1, 0.1, 0, 0.1, 0.1, 1, 0.1, -0.1, 1, -0.1, -0.1, 0, -0.1, 0.1, 0, -0.1, 0.1, 0, -0.1, 0.1, 1, -0.1, -0.1, 1, -0.1, 0.1, 0, 0.1, -0.1, 0, -0.1, -0.1, 1, -0.1, -0.1, 1, -0.1, 0.1, 1, 0.1, 0.1, 0, 0.1)
+
+[node name="corner" type="StaticBody3D"]
+
+[node name="column-triangle2" parent="." instance=ExtResource("1_1wlxw")]
+transform = Transform3D(1.5, 0, 0, 0, 3, 0, 0, 0, 1.5, -0.15, 0, 0.15)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.15, 0, 0.15)
+shape = SubResource("ConcavePolygonShape3D_1wlxw")
+
+[editable path="column-triangle2"]
