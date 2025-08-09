@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxn36lea81t6t"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1txc5"]
+
+[node name="key_b_mesh" type="Node3D"]
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.282517, 0, 0, 0, 0.282517, 0, 0, 0, 0.282517, 0, 0, 0)
+mesh = SubResource("BoxMesh_1txc5")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15862)
+text = "B"

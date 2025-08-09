@@ -1,17 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl2ed4gkybggf"]
+[gd_scene load_steps=8 format=3 uid="uid://dl2ed4gkybggf"]
 
 [ext_resource type="Script" uid="uid://bdnov7ebjc7i4" path="res://scripts/player.gd" id="1_ffboj"]
 [ext_resource type="Script" uid="uid://dt62tx7ms0woq" path="res://scripts/dialog.gd" id="2_1txc5"]
 [ext_resource type="FontFile" uid="uid://cf4ck4emg5py2" path="res://fonts/BoldPixels.ttf" id="2_r66lb"]
+[ext_resource type="PackedScene" uid="uid://cw5biv6cyubha" path="res://prefabs/key_a_mesh.tscn" id="3_ht1c8"]
+[ext_resource type="PackedScene" uid="uid://bxn36lea81t6t" path="res://prefabs/key_b_mesh.tscn" id="4_u51tk"]
 [ext_resource type="AudioStream" uid="uid://cydjn1ct3hps2" path="res://sounds/walking.ogg" id="5_ics1s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gdq8c"]
 radius = 0.3
 height = 1.0
 
-[node name="player" type="CharacterBody3D"]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("key_a", "key_b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1_ffboj")
+key_a = NodePath("Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_a_mesh")
+key_b = NodePath("Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_b_mesh")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
@@ -55,7 +59,25 @@ cull_mask = 1047554
 fov = 40.0
 
 [node name="hand_container" type="Node3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -1, -2.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09579, -0.592816, -1.96141)
+
+[node name="key_a_mesh" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container" instance=ExtResource("3_ht1c8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.446353, 0.756308, -0.536281)
+
+[node name="mesh" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_a_mesh" index="0"]
+layers = 2
+
+[node name="Label3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_a_mesh" index="1"]
+layers = 2
+
+[node name="key_b_mesh" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container" instance=ExtResource("4_u51tk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0618457, 0.756308, -0.536281)
+
+[node name="mesh" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_b_mesh" index="0"]
+layers = 2
+
+[node name="Label3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_b_mesh" index="1"]
+layers = 2
 
 [node name="sub_ui" type="Control" parent="Head/Camera/SubViewportContainer/SubViewport"]
 layout_mode = 3
@@ -117,3 +139,6 @@ autoplay = true
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[editable path="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_a_mesh"]
+[editable path="Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container/key_b_mesh"]

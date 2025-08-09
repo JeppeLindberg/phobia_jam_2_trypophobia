@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3hn8ms2eeq6v"]
+[gd_scene load_steps=15 format=3 uid="uid://b3hn8ms2eeq6v"]
 
 [ext_resource type="Environment" uid="uid://jvmpkdwaeaq" path="res://scenes/main-environment.tres" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://u4lmj15sufdx" path="res://prefabs/child.tscn" id="1_tefeu"]
@@ -9,8 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://cpfifvts1g8gb" path="res://prefabs/crate.tscn" id="5_choun"]
 [ext_resource type="PackedScene" uid="uid://dfgm8b61fy37x" path="res://prefabs/doorway.tscn" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://m4rxfoyiguk5" path="res://prefabs/column_triangle.tscn" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://yyv1l1w0s7ly" path="res://scripts/key_a.gd" id="5_trceg"]
 [ext_resource type="PackedScene" uid="uid://4a1g3rw7gpwu" path="res://prefabs/stairs.tscn" id="9_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://b14ospl7ixddl" path="res://prefabs/unlucky_man.tscn" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://cw5biv6cyubha" path="res://prefabs/key_a_mesh.tscn" id="12_eb6dy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eb6dy"]
+size = Vector3(0.543335, 0.37677, 0.402893)
 
 [node name="main" type="Node3D"]
 
@@ -23,6 +28,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0463313, -25)
 [node name="child" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_tefeu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.75)
 player = NodePath("../player")
+
+[node name="key_a" type="StaticBody3D" parent="." node_paths=PackedStringArray("player")]
+transform = Transform3D(-0.0687988, 0, -0.997631, 0, 1, 0, 0.997631, 0, -0.0687988, 16.0279, 0.967284, -44.1512)
+script = ExtResource("5_trceg")
+player = NodePath("../player")
+
+[node name="key_a_mesh" parent="key_a" instance=ExtResource("12_eb6dy")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="key_a"]
+transform = Transform3D(1.00002, 0, -1.07288e-06, 0, 1, 0, 1.07288e-06, 0, 1.00002, -0.0163307, 0.110321, 0.0769958)
+shape = SubResource("BoxShape3D_eb6dy")
 
 [node name="unlucky_man" parent="." node_paths=PackedStringArray("player") instance=ExtResource("10_choun")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.75, 0, -45.5)
@@ -129,7 +145,7 @@ transform = Transform3D(-0.994427, 0, 0.105431, 0, 1, 0, -0.105431, 0, -0.994427
 transform = Transform3D(0.996564, 0, -0.0828256, 0, 1, 0, 0.0828256, 0, 0.996564, 15.6148, -3.57628e-07, -42.3401)
 
 [node name="crate7" parent="world" instance=ExtResource("5_choun")]
-transform = Transform3D(0.988751, 0, -0.14957, 0, 1, 0, 0.14957, 0, 0.988751, 15.5705, 1.03501, -42.3367)
+transform = Transform3D(0.988751, 0, -0.14957, 0, 1, 0, 0.14957, 0, 0.988751, 15.5705, 1.00193, -42.3367)
 
 [node name="crate3" parent="world" instance=ExtResource("5_choun")]
 transform = Transform3D(1.49126, 0, 0.2192, 0, 1.50729, 0, -0.2192, 0, 1.49126, 15.2615, -2.38419e-07, -40.9038)

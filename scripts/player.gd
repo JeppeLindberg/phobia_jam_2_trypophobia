@@ -1,6 +1,5 @@
 extends CharacterBody3D
 
-@export_subgroup("Properties")
 @export var movement_speed = 5
 
 var mouse_sensitivity = 700
@@ -28,13 +27,23 @@ var tween:Tween
 @onready var sound_footsteps = $SoundFootsteps
 @onready var click_cooldown = $Cooldown
 @onready var dialog = get_node('dialog')
+@export var key_a: Node3D
+@export var key_b: Node3D
 
 
 func _ready():	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	key_a.visible = false
+	key_b.visible = false
 
 func enter_dialog(dialog_array):
 	dialog.enter_dialog(dialog_array)
+
+func add_key_a():
+	key_a.visible = true
+	
+func add_key_b():
+	key_b.visible = true
 
 func _physics_process(delta):
 	
