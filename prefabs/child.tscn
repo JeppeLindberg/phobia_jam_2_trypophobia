@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://u4lmj15sufdx"]
+
+[ext_resource type="Script" uid="uid://don4td0a8iu6n" path="res://scripts/child.gd" id="1_tghle"]
+[ext_resource type="Texture2D" uid="uid://c808lvpwea8i7" path="res://sprites/white.png" id="1_w3v0y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6xl0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_w3v0y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w3v0y"]
+
+[node name="child" type="StaticBody3D"]
+script = ExtResource("1_tghle")
+
+[node name="sprite" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_o6xl0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_w3v0y")

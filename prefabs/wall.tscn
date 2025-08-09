@@ -8,10 +8,10 @@ data = PackedVector3Array(0.1, 1, 0.5, 0.1, 1, -0.5, 0.1, 0, -0.5, 0.1, 0, -0.5,
 [node name="wall" type="StaticBody3D"]
 
 [node name="wall2" parent="." instance=ExtResource("1_3uv27")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.25, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.25, 0)
 shape = SubResource("ConcavePolygonShape3D_3uv27")
 
 [editable path="wall2"]

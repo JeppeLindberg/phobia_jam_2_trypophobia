@@ -18,35 +18,29 @@ var gravity := 0.0
 
 var previously_floored := false
 
-var jump_single := true
-var jump_double := true
-
 var container_offset = Vector3(1.2, -1.1, -2.75)
 
 var tween:Tween
 
 @onready var camera = $Head/Camera
 @onready var raycast = $Head/Camera/RayCast
-@onready var muzzle = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Muzzle
-@onready var container = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Container
+@onready var hand_container = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/hand_container
 @onready var sound_footsteps = $SoundFootsteps
 @onready var click_cooldown = $Cooldown
+@onready var dialog = get_node('dialog')
 
-# @export var crosshair:TextureRect
-
-# Functions
 
 func _ready():	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+func enter_dialog(dialog_array):
+	dialog.enter_dialog(dialog_array)
+
 func _physics_process(delta):
-	
-	# Handle functions
 	
 	handle_controls(delta)
 	handle_gravity(delta)
 	
-	# Movement
 
 	var applied_velocity: Vector3
 	
@@ -57,18 +51,14 @@ func _physics_process(delta):
 	
 	velocity = applied_velocity
 	move_and_slide()
-	
-	# Rotation
-	
+		
 	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)	
 	
 	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
 	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
 	
-	container.position = lerp(container.position, container_offset - (basis.inverse() * applied_velocity / 30), delta * 10)
-	
-	# Movement sound
-	
+	hand_container.position = lerp(hand_container.position, container_offset - (basis.inverse() * applied_velocity / 30), delta * 10)
+		
 	sound_footsteps.stream_paused = true
 	
 	if is_on_floor():
@@ -87,12 +77,13 @@ func _physics_process(delta):
 		get_tree().reload_current_scene()
 
 func _input(event):
-	if event is InputEventMouseMotion and mouse_captured:
-		
-		input_mouse = event.relative / mouse_sensitivity
-		
-		rotation_target.y -= event.relative.x / mouse_sensitivity
-		rotation_target.x -= event.relative.y / mouse_sensitivity
+	if not dialog.is_in_dialog():
+		if event is InputEventMouseMotion and mouse_captured:
+			
+			input_mouse = event.relative / mouse_sensitivity
+			
+			rotation_target.y -= event.relative.x / mouse_sensitivity
+			rotation_target.x -= event.relative.y / mouse_sensitivity
 
 func handle_controls(_delta):	
 	if Input.is_action_just_pressed("mouse_capture"):
@@ -105,36 +96,35 @@ func handle_controls(_delta):
 		
 		input_mouse = Vector2.ZERO
 	
-	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var input = Vector2.ZERO
+	if not dialog.is_in_dialog():
+		input = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	
 	movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
 	
-	var rotation_input := Input.get_vector("camera_right", "camera_left", "camera_down", "camera_up")
+	var rotation_input = Vector2.ZERO
+	if not dialog.is_in_dialog():
+		rotation_input = Input.get_vector("camera_right", "camera_left", "camera_down", "camera_up")
 	
 	rotation_target -= Vector3(-rotation_input.y, -rotation_input.x, 0).limit_length(1.0) * gamepad_sensitivity
 	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
 	
-	action_shoot()
-
-# Handle gravity
+	interact()
 
 func handle_gravity(delta):
 	
 	gravity += 20 * delta
 	
 	if gravity > 0 and is_on_floor():
-		
-		jump_single = true
 		gravity = 0
 
-func action_shoot():
+func interact():
+	raycast.force_raycast_update()
 	
-	if Input.is_action_just_pressed("shoot"):
+	if not dialog.is_in_dialog() and Input.is_action_just_pressed("interact"):
 	
 		if !click_cooldown.is_stopped(): 
 			return
-		
-		raycast.force_raycast_update()
 		
 		if !raycast.is_colliding(): 
 			return
@@ -142,6 +132,9 @@ func action_shoot():
 		var collider = raycast.get_collider()
 		
 		print(collider)
+
+		if collider.is_in_group('interactable'):
+			collider.interact()
 		
 		click_cooldown.start()
 		

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbfhj0tswcksm"
-path="res://.godot/imported/burst.png-0ca3a873296b113f4396e0bdead4beff.ctex"
+path="res://.godot/imported/burst.png-51065e6ebc50addbf77323247c413d0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/burst.png"
-dest_files=["res://.godot/imported/burst.png-0ca3a873296b113f4396e0bdead4beff.ctex"]
+source_file="res://sprites/kenny/burst.png"
+dest_files=["res://.godot/imported/burst.png-51065e6ebc50addbf77323247c413d0f.ctex"]
 
 [params]
 

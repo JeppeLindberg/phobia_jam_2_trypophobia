@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dl2ed4gkybggf"]
+[gd_scene load_steps=6 format=3 uid="uid://dl2ed4gkybggf"]
 
 [ext_resource type="Script" uid="uid://bdnov7ebjc7i4" path="res://scripts/player.gd" id="1_ffboj"]
-[ext_resource type="SpriteFrames" uid="uid://dbv3sy5qjatnl" path="res://sprites/burst_animation.tres" id="4_m6ukc"]
+[ext_resource type="Script" uid="uid://dt62tx7ms0woq" path="res://scripts/dialog.gd" id="2_1txc5"]
+[ext_resource type="FontFile" uid="uid://cf4ck4emg5py2" path="res://fonts/BoldPixels.ttf" id="2_r66lb"]
 [ext_resource type="AudioStream" uid="uid://cydjn1ct3hps2" path="res://sounds/walking.ogg" id="5_ics1s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gdq8c"]
@@ -15,6 +16,16 @@ script = ExtResource("1_ffboj")
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 shape = SubResource("CapsuleShape3D_gdq8c")
+
+[node name="dialog" type="Node3D" parent="." node_paths=PackedStringArray("text_panel", "text")]
+script = ExtResource("2_1txc5")
+text_panel = NodePath("../Head/Camera/SubViewportContainer/SubViewport/sub_ui/text_margin_outer/text_panel")
+text = NodePath("../Head/Camera/SubViewportContainer/SubViewport/sub_ui/text_margin_outer/text_panel/text_margin/text")
+
+[node name="cooldown" type="Timer" parent="dialog"]
+wait_time = 0.1
+one_shot = true
+autostart = true
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -43,18 +54,59 @@ render_target_update_mode = 4
 cull_mask = 1047554
 fov = 40.0
 
-[node name="Container" type="Node3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem"]
+[node name="hand_container" type="Node3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -1, -2.25)
 
-[node name="Muzzle" type="AnimatedSprite3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.75, -6)
-layers = 2
-sprite_frames = ExtResource("4_m6ukc")
-frame = 2
+[node name="sub_ui" type="Control" parent="Head/Camera/SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="text_margin_outer" type="MarginContainer" parent="Head/Camera/SubViewportContainer/SubViewport/sub_ui"]
+custom_minimum_size = Vector2(600, 170)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 50
+
+[node name="text_panel" type="Panel" parent="Head/Camera/SubViewportContainer/SubViewport/sub_ui/text_margin_outer"]
+layout_mode = 2
+
+[node name="text_margin" type="MarginContainer" parent="Head/Camera/SubViewportContainer/SubViewport/sub_ui/text_margin_outer/text_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="text" type="RichTextLabel" parent="Head/Camera/SubViewportContainer/SubViewport/sub_ui/text_margin_outer/text_panel/text_margin"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_r66lb")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "te[color=#FFFFFF00]st"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RayCast" type="RayCast3D" parent="Head/Camera"]
 exclude_parent = false
-target_position = Vector3(0, 0, -10)
+target_position = Vector3(0, 0, -2)
 collide_with_areas = true
 
 [node name="SoundFootsteps" type="AudioStreamPlayer" parent="."]
